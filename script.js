@@ -13,3 +13,7 @@ const multiply = function(a, b) {
 const divide = function(a, b) {
     return a / b;
 }
+
+let firstNumber;
+let operator;
+let secondNumber;
