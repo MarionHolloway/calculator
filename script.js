@@ -1,7 +1,15 @@
-const container = document.querySelector('#test');
+const add = function(a, b) {
+    return a + b;
+}
 
-const content = document.createElement('div');
-content.classList.add('content');
-content.textContent = 'This is the glorious text-content!';
+const subtract = function(a, b) {
+    return a - b;
+}
 
-container.appendChild(content);
+const multiply = function(a, b) {
+    return a * b;
+}
+
+const divide = function(a, b) {
+    return a / b;
+}
