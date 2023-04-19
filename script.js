@@ -70,15 +70,19 @@ const processNumberKey = function (key) {
     updateDisplay(currentValue);
 }
 
+const checkFirstNumberIsEmpty = function () {
+    return (firstNumber == 0 | firstNumber == undefined);
+}
+
 const processOperatorKey = function (key) {
-    if (firstNumber == 0 | firstNumber == undefined) {
-        firstNumber = Number(currentValue);
+    if (checkFirstNumberIsEmpty()) {
+        firstNumber = currentValue;
         operator = key;
         currentValue = 0;
         updateDisplay(operator);
     }
     else {
-        secondNumber = Number(currentValue);
+        secondNumber = currentValue;
         currentValue = operate();
         firstNumber = currentValue;
         operator = key;
@@ -86,14 +90,19 @@ const processOperatorKey = function (key) {
     }
 }
 
+const checkOperatorIsEmpty = function () {
+    return (operator == undefined);
+}
+
 const processEqualsKey = function (key) {
-    if (firstNumber == undefined | operator == undefined) {
+    if (checkOperatorIsEmpty()) {
         return;
     }
     else {
-        secondNumber = Number(currentValue);
+        secondNumber = currentValue;
         currentValue = operate();
         firstNumber = currentValue;
+        operator = undefined;
         updateDisplay(currentValue);
     }    
 }
