@@ -65,7 +65,8 @@ const isOperator = function(key) {
 const processKey = function(key) {
     if (typeof(key) == 'number') {
         updateCurrentValue(key)
-        updateDisplay(currentValue);
+        const roundedValue = Math.round(currentValue * 100000) / 100000;
+        updateDisplay(roundedValue);
     }
     else if (isOperator(key)) {
         if (firstNumber == 0 | firstNumber == undefined) {
@@ -79,21 +80,24 @@ const processKey = function(key) {
             currentValue = operate();
             firstNumber = currentValue;
             operator = key;
-            updateDisplay(currentValue);
+            const roundedValue = Math.round(currentValue * 100000) / 100000;
+            updateDisplay(roundedValue);
         }
     }
     else if (key == '=') {
         secondNumber = Number(currentValue);
         currentValue = operate();
         firstNumber = currentValue;
-        updateDisplay(currentValue);
+        const roundedValue = Math.round(currentValue * 100000) / 100000;
+        updateDisplay(roundedValue);
     }
     else if (key == 'CL') {
         currentValue = 0;
         firstNumber = undefined;
         secondNumber = undefined;
         operator = undefined;
-        updateDisplay(currentValue);
+        const roundedValue = Math.round(currentValue * 100000) / 100000;
+        updateDisplay(roundedValue);
     }
 }
 
