@@ -81,6 +81,10 @@ const processOperatorKey = function (key) {
         currentValue = 0;
         updateDisplay(operator);
     }
+    else if (currentValue == 0) {
+        operator = key;
+        updateDisplay(operator);
+    }
     else {
         secondNumber = currentValue;
         currentValue = operate();
@@ -101,9 +105,10 @@ const processEqualsKey = function (key) {
     else {
         secondNumber = currentValue;
         currentValue = operate();
+        updateDisplay(currentValue);
         firstNumber = currentValue;
         operator = undefined;
-        updateDisplay(currentValue);
+        currentValue = 0;
     }    
 }
 
