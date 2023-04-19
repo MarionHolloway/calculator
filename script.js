@@ -11,7 +11,12 @@ const multiply = function(a, b) {
 }
 
 const divide = function(a, b) {
-    return a / b;
+    if (b == 0) {
+        return "Nope";
+    }
+    else {
+        return a / b;
+    }
 }
 
 let firstNumber;
@@ -74,6 +79,14 @@ const checkFirstNumberIsEmpty = function () {
     return (firstNumber == 0 | firstNumber == undefined);
 }
 
+const handleNope = function() {
+    updateDisplay("Nope");
+    currentValue = 0;
+    firstNumber = undefined;
+    secondNumber = undefined;
+    operator = undefined;
+}
+
 const processOperatorKey = function (key) {
     if (checkFirstNumberIsEmpty()) {
         firstNumber = currentValue;
@@ -88,9 +101,15 @@ const processOperatorKey = function (key) {
     else {
         secondNumber = currentValue;
         currentValue = operate();
-        firstNumber = currentValue;
-        operator = key;
-        updateDisplay(currentValue);
+        if (currentValue == "Nope")  {
+            handleNope();
+        }
+        else {
+            firstNumber = currentValue;
+            operator = key;
+            updateDisplay(currentValue);
+        }
+        
     }
 }
 
@@ -105,10 +124,15 @@ const processEqualsKey = function (key) {
     else {
         secondNumber = currentValue;
         currentValue = operate();
-        updateDisplay(currentValue);
-        firstNumber = currentValue;
-        operator = undefined;
-        currentValue = 0;
+        if (currentValue == "Nope")  {
+            handleNope();
+        }
+        else {
+            updateDisplay(currentValue);
+            firstNumber = currentValue;
+            operator = undefined;
+            currentValue = 0;
+        }
     }    
 }
 
