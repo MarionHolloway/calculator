@@ -61,68 +61,70 @@ const isOperator = function(key) {
     key == '/')
 }
 
+const processNumberKey = function (key) {
+    updateCurrentValue(key)
+    const roundedValue = Math.round(currentValue * 100000) / 100000;
+    updateDisplay(roundedValue);
+}
 
-const processKey = function(key) {
-    if (typeof(key) == 'number') {
-        updateCurrentValue(key)
-        const roundedValue = Math.round(currentValue * 100000) / 100000;
-        updateDisplay(roundedValue);
-    }
-    else if (isOperator(key)) {
-        if (firstNumber == 0 | firstNumber == undefined) {
-            firstNumber = Number(currentValue);
-            operator = key;
-            currentValue = 0;
-            updateDisplay (operator);
-        }
-        else {
-            secondNumber = Number(currentValue);
-            currentValue = operate();
-            firstNumber = currentValue;
-            operator = key;
-            const roundedValue = Math.round(currentValue * 100000) / 100000;
-            updateDisplay(roundedValue);
-        }
-    }
-    else if (key == '=') {
-        if (firstNumber == undefined | operator == undefined) {
-            return;
-        }
-        else {
-            secondNumber = Number(currentValue);
-            currentValue = operate();
-            firstNumber = currentValue;
-            const roundedValue = Math.round(currentValue * 100000) / 100000;
-            updateDisplay(roundedValue);
-        }
-    }
-    else if (key == 'CL') {
+const processOperatorKey = function (key) {
+    if (firstNumber == 0 | firstNumber == undefined) {
+        firstNumber = Number(currentValue);
+        operator = key;
         currentValue = 0;
-        firstNumber = undefined;
-        secondNumber = undefined;
-        operator = undefined;
+        updateDisplay(operator);
+    }
+    else {
+        secondNumber = Number(currentValue);
+        currentValue = operate();
+        firstNumber = currentValue;
+        operator = key;
         const roundedValue = Math.round(currentValue * 100000) / 100000;
         updateDisplay(roundedValue);
     }
 }
 
+const processEqualsKey = function (key) {
+    if (firstNumber == undefined | operator == undefined) {
+        return;
+    }
+    else {
+        secondNumber = Number(currentValue);
+        currentValue = operate();
+        firstNumber = currentValue;
+        const roundedValue = Math.round(currentValue * 100000) / 100000;
+        updateDisplay(roundedValue);
+    }    
+}
+
+const processClearKey = function (key) {
+    currentValue = 0;
+    firstNumber = undefined;
+    secondNumber = undefined;
+    operator = undefined;
+    const roundedValue = Math.round(currentValue * 100000) / 100000;
+    updateDisplay(roundedValue);    
+}
+
+
+
 const numberKeys = document.getElementsByClassName('number');
 
 for (const numberKey of numberKeys) {
-    numberKey.addEventListener('click', function() {processKey(Number(numberKey.textContent))});
+    numberKey.addEventListener('click', function() {processNumberKey(Number(numberKey.textContent))});
 }
 
 const operatorKeys = document.getElementsByClassName('operator');
 
 for (const operatorKey of operatorKeys) {
-    operatorKey.addEventListener('click', function() {processKey(operatorKey.textContent)});
+    operatorKey.addEventListener('click', function() {processOperatorKey(operatorKey.textContent)});
 }
 
 const equalsKey = document.querySelector('#equals');
-equalsKey.addEventListener('click', function() {processKey(equalsKey.textContent)});
+equalsKey.addEventListener('click', function() {processEqualsKey(equalsKey.textContent)});
 
 const clearKey = document.querySelector('#clear');
-clearKey.addEventListener('click', function() {processKey(clearKey.textContent)});
+clearKey.addEventListener('click', function() {processClearKey(clearKey.textContent)});
 
 
 
