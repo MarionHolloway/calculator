@@ -33,11 +33,11 @@ const operate = function(firstNumber, operator, secondNumber) {
 
 let currentValue;
 
-const updateCurrentValue = function(number, currentValue) {
+const updateCurrentValue = function(number) {
     if (currentValue == undefined) {
-        currentValue = 0;
+        currentValue = number;
     }    
-    else if (currentValue == 0) {
+    else if (currentValue == '0') {
         currentValue = number;
     }
     else {
@@ -47,20 +47,72 @@ const updateCurrentValue = function(number, currentValue) {
     return currentValue;
 }
 
-const updateDisplay = function(numberPressed) {
+const updateDisplay = function(newValue) {
     const displayValue = document.querySelector('#value');
-    const newValue = updateCurrentValue(numberPressed, currentValue)
     displayValue.textContent = newValue;
     return newValue;
 }
 
+const isNumber = function(key) {
+    return (key == '0' |
+    key == '1' |
+    key == '2' |
+    key == '3' |
+    key == '4' |
+    key == '5' |
+    key == '6' |
+    key == '7' |
+    key == '8' |
+    key == '9')
+}
 
+const isOperator = function(key) {
+    return (key == '+' |
+    key == '-' |
+    key == '*' |
+    key == '/')
+}
+
+
+const processKey = function(key) {
+    if (isNumber(key)) {
+        updateCurrentValue(key)
+        updateDisplay(currentValue);
+    }
+    else if (isOperator(key)) {
+        firstNumber = Number(currentValue);
+        operator = key;
+        currentValue = '0';
+        updateDisplay (operator);
+    }
+    else if (key == '=') {
+        secondNumber = Number(currentValue);
+        updateDisplay(operate(firstNumber, operator, secondNumber))
+    }
+    else if (key == 'CL') {
+        currentValue = '0';
+        updateDisplay(currentValue);
+    }
+}
 
 const numberKeys = document.getElementsByClassName('number');
 
 for (const numberKey of numberKeys) {
-    numberKey.addEventListener('click', function() {currentValue = updateDisplay(numberKey.textContent)});
+    numberKey.addEventListener('click', function() {processKey(numberKey.textContent)});
 }
+
+const operatorKeys = document.getElementsByClassName('operator');
+
+for (const operatorKey of operatorKeys) {
+    operatorKey.addEventListener('click', function() {processKey(operatorKey.textContent)});
+}
+
+const equalsKey = document.querySelector('#equals');
+equalsKey.addEventListener('click', function() {processKey(equalsKey.textContent)});
+
+const clearKey = document.querySelector('#clear');
+clearKey.addEventListener('click', function() {processKey(clearKey.textContent)});
+
 
 
 
