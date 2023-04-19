@@ -31,15 +31,35 @@ const operate = function(firstNumber, operator, secondNumber) {
     }
 }
 
-const displayValue = function(number) {
-    const value = document.querySelector('#value');
-    value.textContent = number;
+let currentValue;
+
+const updateCurrentValue = function(number, currentValue) {
+    if (currentValue == undefined) {
+        currentValue = 0;
+    }    
+    else if (currentValue == 0) {
+        currentValue = number;
+    }
+    else {
+        currentValue = currentValue + number;
+        
+    }
+    return currentValue;
 }
+
+const updateDisplay = function(numberPressed) {
+    const displayValue = document.querySelector('#value');
+    const newValue = updateCurrentValue(numberPressed, currentValue)
+    displayValue.textContent = newValue;
+    return newValue;
+}
+
+
 
 const numberKeys = document.getElementsByClassName('number');
 
 for (const numberKey of numberKeys) {
-    numberKey.addEventListener('click', function() {displayValue(numberKey.textContent)});
+    numberKey.addEventListener('click', function() {currentValue = updateDisplay(numberKey.textContent)});
 }
 
 
