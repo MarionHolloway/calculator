@@ -85,11 +85,16 @@ const processKey = function(key) {
         }
     }
     else if (key == '=') {
-        secondNumber = Number(currentValue);
-        currentValue = operate();
-        firstNumber = currentValue;
-        const roundedValue = Math.round(currentValue * 100000) / 100000;
-        updateDisplay(roundedValue);
+        if (firstNumber == undefined | operator == undefined) {
+            return;
+        }
+        else {
+            secondNumber = Number(currentValue);
+            currentValue = operate();
+            firstNumber = currentValue;
+            const roundedValue = Math.round(currentValue * 100000) / 100000;
+            updateDisplay(roundedValue);
+        }
     }
     else if (key == 'CL') {
         currentValue = 0;
