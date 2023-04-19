@@ -45,7 +45,13 @@ const updateCurrentValue = function(number) {
 
 const updateDisplay = function(newValue) {
     const displayValue = document.querySelector('#value');
-    displayValue.textContent = newValue;
+    if (typeof(newValue) == 'number') {
+        displayValue.textContent = roundForDisplay(newValue);
+    }
+    else {
+        displayValue.textContent = newValue;
+    }
+    
 }
 
 const isOperator = function(key) {
@@ -55,10 +61,13 @@ const isOperator = function(key) {
     key == '/')
 }
 
+const roundForDisplay = function(value) {
+    return Math.round(value * 100000) / 100000
+}
+
 const processNumberKey = function (key) {
     updateCurrentValue(key)
-    const roundedValue = Math.round(currentValue * 100000) / 100000;
-    updateDisplay(roundedValue);
+    updateDisplay(currentValue);
 }
 
 const processOperatorKey = function (key) {
@@ -73,8 +82,7 @@ const processOperatorKey = function (key) {
         currentValue = operate();
         firstNumber = currentValue;
         operator = key;
-        const roundedValue = Math.round(currentValue * 100000) / 100000;
-        updateDisplay(roundedValue);
+        updateDisplay(currentValue);
     }
 }
 
@@ -86,8 +94,7 @@ const processEqualsKey = function (key) {
         secondNumber = Number(currentValue);
         currentValue = operate();
         firstNumber = currentValue;
-        const roundedValue = Math.round(currentValue * 100000) / 100000;
-        updateDisplay(roundedValue);
+        updateDisplay(currentValue);
     }    
 }
 
@@ -96,8 +103,7 @@ const processClearKey = function (key) {
     firstNumber = undefined;
     secondNumber = undefined;
     operator = undefined;
-    const roundedValue = Math.round(currentValue * 100000) / 100000;
-    updateDisplay(roundedValue);    
+    updateDisplay(currentValue);    
 }
 
 
