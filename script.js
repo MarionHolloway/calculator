@@ -30,3 +30,22 @@ const operate = function(firstNumber, operator, secondNumber) {
             return divide(firstNumber, secondNumber);
     }
 }
+
+const displayValue = function(number) {
+    const value = document.querySelector('#value');
+    value.textContent = number;
+}
+
+const numberKeys = document.getElementsByClassName('number');
+
+for (const numberKey of numberKeys) {
+    numberKey.addEventListener('click', function() {displayValue(numberKey.textContent)});
+}
+
+
+
+
+
+
+
+    
