@@ -78,6 +78,7 @@ const processKey = function(key) {
             secondNumber = Number(currentValue);
             currentValue = operate();
             firstNumber = currentValue;
+            operator = key;
             updateDisplay(currentValue);
         }
     }
@@ -88,7 +89,7 @@ const processKey = function(key) {
         updateDisplay(currentValue);
     }
     else if (key == 'CL') {
-        currentValue = undefined;
+        currentValue = 0;
         firstNumber = undefined;
         secondNumber = undefined;
         operator = undefined;
