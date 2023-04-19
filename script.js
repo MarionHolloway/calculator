@@ -34,17 +34,11 @@ const operate = function() {
 let currentValue;
 
 const updateCurrentValue = function(number) {
-    if (currentValue == undefined) {
+    if (currentValue == undefined | firstNumber != undefined | currentValue == 0) {
         currentValue = number;
     }    
-    else if (currentValue == 0) {
-        currentValue = number;
-    }
-    else if (firstNumber == undefined) {
+    else {
         currentValue = (currentValue * 10) + number;
-    }
-    else if (firstNumber != undefined) {
-        currentValue = number;
     }
     return currentValue;
 }
