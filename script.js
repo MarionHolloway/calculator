@@ -18,7 +18,7 @@ let firstNumber;
 let operator;
 let secondNumber;
 
-const operate = function(firstNumber, operator, secondNumber) {
+const operate = function() {
     switch (operator) {
         case "+":
             return add(firstNumber, secondNumber);
@@ -37,12 +37,14 @@ const updateCurrentValue = function(number) {
     if (currentValue == undefined) {
         currentValue = number;
     }    
-    else if (currentValue == '0') {
+    else if (currentValue == 0) {
         currentValue = number;
     }
-    else {
-        currentValue = currentValue + number;
-        
+    else if (firstNumber == undefined) {
+        currentValue = (currentValue * 10) + number;
+    }
+    else if (firstNumber != undefined) {
+        currentValue = number;
     }
     return currentValue;
 }
@@ -50,20 +52,6 @@ const updateCurrentValue = function(number) {
 const updateDisplay = function(newValue) {
     const displayValue = document.querySelector('#value');
     displayValue.textContent = newValue;
-    return newValue;
-}
-
-const isNumber = function(key) {
-    return (key == '0' |
-    key == '1' |
-    key == '2' |
-    key == '3' |
-    key == '4' |
-    key == '5' |
-    key == '6' |
-    key == '7' |
-    key == '8' |
-    key == '9')
 }
 
 const isOperator = function(key) {
@@ -75,22 +63,35 @@ const isOperator = function(key) {
 
 
 const processKey = function(key) {
-    if (isNumber(key)) {
+    if (typeof(key) == 'number') {
         updateCurrentValue(key)
         updateDisplay(currentValue);
     }
     else if (isOperator(key)) {
-        firstNumber = Number(currentValue);
-        operator = key;
-        currentValue = '0';
-        updateDisplay (operator);
+        if (firstNumber == 0 | firstNumber == undefined) {
+            firstNumber = Number(currentValue);
+            operator = key;
+            currentValue = 0;
+            updateDisplay (operator);
+        }
+        else {
+            secondNumber = Number(currentValue);
+            currentValue = operate();
+            firstNumber = currentValue;
+            updateDisplay(currentValue);
+        }
     }
     else if (key == '=') {
         secondNumber = Number(currentValue);
-        updateDisplay(operate(firstNumber, operator, secondNumber))
+        currentValue = operate();
+        firstNumber = currentValue;
+        updateDisplay(currentValue);
     }
     else if (key == 'CL') {
-        currentValue = '0';
+        currentValue = undefined;
+        firstNumber = undefined;
+        secondNumber = undefined;
+        operator = undefined;
         updateDisplay(currentValue);
     }
 }
@@ -98,7 +99,7 @@ const processKey = function(key) {
 const numberKeys = document.getElementsByClassName('number');
 
 for (const numberKey of numberKeys) {
-    numberKey.addEventListener('click', function() {processKey(numberKey.textContent)});
+    numberKey.addEventListener('click', function() {processKey(Number(numberKey.textContent))});
 }
 
 const operatorKeys = document.getElementsByClassName('operator');
