@@ -109,21 +109,17 @@ const processClearKey = function (key) {
 
 
 const numberKeys = document.getElementsByClassName('number');
+const operatorKeys = document.getElementsByClassName('operator');
+const equalsKey = document.querySelector('#equals');
+const clearKey = document.querySelector('#clear');
 
 for (const numberKey of numberKeys) {
     numberKey.addEventListener('click', function() {processNumberKey(Number(numberKey.textContent))});
 }
-
-const operatorKeys = document.getElementsByClassName('operator');
-
 for (const operatorKey of operatorKeys) {
     operatorKey.addEventListener('click', function() {processOperatorKey(operatorKey.textContent)});
 }
-
-const equalsKey = document.querySelector('#equals');
 equalsKey.addEventListener('click', function() {processEqualsKey(equalsKey.textContent)});
-
-const clearKey = document.querySelector('#clear');
 clearKey.addEventListener('click', function() {processClearKey(clearKey.textContent)});
 
 
